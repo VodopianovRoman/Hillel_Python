@@ -2,6 +2,7 @@
 # keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 #  ожидаемый результат: {1: 1, 2: 4, 3: 9 …} 
 
+
 # a = {i:i*i for i in keys}
 # print(a)
 
@@ -182,3 +183,4 @@
 #         print('No')
 #
 # threeWords('hello 1 one two three 15 world')
+
