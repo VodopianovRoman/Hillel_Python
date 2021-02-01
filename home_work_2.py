@@ -36,10 +36,14 @@
 # 4)Дан массив чисел. 
 # a = [10, 11, 2, 3, 5, 8, 23, 11, 2, 5, 76, 43, 2, 32, 76, 3, 10, 0, 1]
 # 4.1) убрать из него повторяющиеся элементы
-# b = list(set(a[:]))
-# print(b)
+# sorted_list = list(set(a[:]))
+# print(sorted_list)
 # 4.2) вывести 3 наибольших числа из исходного массива
-# def maxDigit(a):
+
+# def max_digit(a):
+#     return sorted(a)[-3:]
+
+# def max_digit(a):
 #     b=a[:3]
 #     for i in a:
 #         if i > b[0]:
@@ -48,7 +52,8 @@
 #             b.sort()
 #     return b
 #
-# print(*maxDigit(a))
+# print(max_digit(a))
+# print(*max_digit(a))
 
 # 4.3) вывести индекс минимального элемента массива
 # b = min(a)
@@ -61,6 +66,10 @@
 # dict_one = { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }
 # dict_two = { 'a': 6, 'b': 7, 'z': 20, 'x': 40 }
 #
+# def coincidence(dict_one, dict_two):
+#     _coincidence = (dict_one.keys()&dict_two.keys())
+#     return _coincidence
+
 # def coincidence(dict1, dict2):
 #     _coincidence=[]
 #     for key in dict1.keys():
@@ -89,7 +98,8 @@
 
 # 6.2) сгруппировать данные по значению ключа 'city' 
 # вывод должен быть такого вида :
-
+# import pprint
+#
 # result = {}
 # for record in data:
 #     city = record.pop('city')
@@ -98,7 +108,7 @@
 #     else:
 #         result[city] = [record]
 #
-# print(result)
+# pprint.pprint(result)
 
 # result = {
 #    'Kiev': [
@@ -116,6 +126,9 @@
 # Например:
 
 # def most_frequent(list_var):
+#     return max(set(list_var), key = list_var.count)
+
+# def most_frequent(list_var):
 #     a=''
 #     count=1
 #     for i in range(len(list_var)):
@@ -124,14 +137,14 @@
 #             a = list_var[i]
 #     return a
 #
-# print(most_frequent(['a', 'a', 'bi', 'bi', 'bi', 'di', 'di', 'fa', 'fa', 'fa', 'fa']))
+# print(most_frequent(['a', 'a', 'bi', 'bi', 'di', 'di', 'fa', 'fa', 'fa', 'fa']))
 # =======================================================
 # 8) Дано целое число. Необходимо подсчитать произведение всех цифр в этом числе,
 # за исключением нулей.
 # Например:
 # Дано число 123405. Результат будет: 1*2*3*4*5=120.
 
-# def sumOfnum(n):
+# def sum_ofnum(n):
 #     n = str(n)
 #     mult = 1
 #     for i in n:
@@ -140,7 +153,7 @@
 #             mult*=i
 #     print(mult)
 
-# def sumOfnum(n):
+# def sum_ofnum(n):
 #     mult = 1
 #     while n > 0:
 #         a = n % 10
@@ -150,7 +163,7 @@
 #     print(mult)
 #
 #
-# sumOfnum(123405)
+# sum_ofnum(123405)
 
 # =======================================================
 # 9) Есть массив с положительными числами и число n (def some_function(array, n)).
@@ -170,7 +183,7 @@
 # слова подряд.
 # Для примера, в строке "hello 1 one two three 15 world" есть три слова подряд.
 
-# def threeWords(st):
+# def three_words(st):
 #     count=0
 #     st = st.split()
 #     for i in st:
@@ -178,10 +191,10 @@
 #             count+=1
 #         elif i.isdigit():
 #             count-=1
-#     if count == 3:
+#     if count >= 3:
 #         print('Yes')
 #     else:
 #         print('No')
 #
-# threeWords('hello 1 one two three 15 world')
+# three_words('hello 1 one two 15 world three three')
 
