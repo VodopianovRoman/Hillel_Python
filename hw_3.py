@@ -62,12 +62,32 @@
 # o => 2
 # u => 3
 # # "1lpp0"
+
+# def encrypt(original_word):
+#     original_word = original_word[::-1]
+#     lis_original_word = list(original_word)
+#     lis_conformity = {
+#         'a': 0,
+#         'e': 1,
+#         'i': 2,
+#         'o': 2,
+#         'u': 3
+#     }
+#     for i in range(len(lis_original_word)):
+#         if lis_original_word[i] in lis_conformity:
+#             lis_original_word[i] = str(lis_conformity[lis_original_word[i]])
+#
+#     original_word = ''.join(lis_original_word)
+#
+#     print(original_word)
+#
+#
+# encrypt('alpaca')
 # Example:
 # encrypt("banana") ➞ "0n0n0b"
 # encrypt("karaca") ➞ "0c0r0k"
 # encrypt("burak") ➞ "k0r3b"
 # encrypt("alpaca") ➞ "0c0pl0"
-
 
 
 # **4)Given a 3x3 matrix of a completed tic-tac-toe game, create a function that returns
@@ -92,5 +112,3 @@
 #     ["O", "O", "X"],
 #     ["X", "X", "O"]
 # ]) ➞ "Draw"
-
-
