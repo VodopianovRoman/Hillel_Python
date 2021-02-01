@@ -94,12 +94,68 @@
 # whether the game is a win
 # for "X", "O", or a "Draw", where "X" and "O" represent themselves on the matrix,
 # and "E" represents an empty spot.
+
+def tic_tac_toe(lis):
+    lis_winner = []
+    count_winner = 0
+    for i in lis:
+        if i.count("X") == 3:
+            print("X")
+            count_winner+=1
+        elif i.count("O") == 3:
+            print("O")
+            count_winner+=1
+
+    for j in range(3):
+        for i in range(3):
+            lis_winner.append(lis[i][j])
+            if lis_winner.count("X") == 3:
+                print("X")
+                count_winner+=1
+                lis_winner = []
+            elif lis_winner.count("O") == 3:
+                print("O")
+                count_winner+=1
+                lis_winner = []
+            lis_winner = []
+
+    for i in range(3):
+        for j in range(3):
+            if i==j:
+                lis_winner.append(lis[i][j])
+                if lis_winner.count("X") == 3:
+                    print("X")
+                    count_winner += 1
+                    lis_winner = []
+                elif lis_winner.count("O") == 3:
+                    print("O")
+                    count_winner += 1
+                    lis_winner = []
+    lis_winner = []
+
+    for i in range(3):
+        for j in range(3):
+            if i-2 == j or i == j or i == j-2:
+                lis_winner.append(lis[i][j])
+                if lis_winner.count("X") == 3:
+                    print("X")
+                    count_winner += 1
+                    lis_winner = []
+                elif lis_winner.count("O") == 3:
+                    print("O")
+                    count_winner += 1
+                    lis_winner = []
+    lis_winner = []
+
+    if count_winner == 0:
+        print('Draw')
+
 # Example:
 # tic_tac_toe([
 #     ["X", "O", "X"],
 #     ["O", "X", "O"],
 #     ["O", "X", "X"]
-# ]) ➞ "X"
+# ])  ➞ "X"
 #
 # tic_tac_toe([
 #     ["O", "O", "O"],
