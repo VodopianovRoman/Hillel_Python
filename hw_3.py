@@ -34,6 +34,24 @@
 # "tp" ⁠— Number of rolls.
 # Return a statement telling the user if they need to buy more TP!
 
+# def stock_tp(**kwargs):
+#     # print(kwargs)
+#     for i in kwargs:
+#         # print(i, kwargs[i])
+#         if i == 'people':
+#             one_day_need = kwargs[i] * 57
+#         else:
+#             all_tips = kwargs[i] * 500
+#     stock = all_tips / one_day_need
+#     if stock >= 14:
+#         print('Congratulations, you will survive the quarantine and be clean!')
+#     else:
+#         print('Buddy, you need to buy more goods, otherwise you will be dirty :-(')
+#
+#
+# stock_tp(people = int(input('Enter the number of people who will live:')), tp = int(input('Enter the number of rolls of TP you have:')))
+
+
 # 3) Make a function that encrypts a given input with these steps:
 # Input: "apple"
 # Step 1: Reverse the input: "elppa"
@@ -45,10 +63,11 @@
 # u => 3
 # # "1lpp0"
 # Example:
-# encrypt("banana") ➞ "0n0n0baca"
-# encrypt("karaca") ➞ "0c0r0kaca"
-# encrypt("burak") ➞ "k0r3baca"
-# encrypt("alpaca") ➞ "0c0pl0aca"
+# encrypt("banana") ➞ "0n0n0b"
+# encrypt("karaca") ➞ "0c0r0k"
+# encrypt("burak") ➞ "k0r3b"
+# encrypt("alpaca") ➞ "0c0pl0"
+
 
 
 # **4)Given a 3x3 matrix of a completed tic-tac-toe game, create a function that returns
