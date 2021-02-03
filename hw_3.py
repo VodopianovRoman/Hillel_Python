@@ -2,6 +2,7 @@
 # At the entrance, your function accepts your version printed from the console,
 # the computer makes a decision randomly.
 
+
 # import random
 #
 # lis_options = ['rock', 'scissors', 'paper']
