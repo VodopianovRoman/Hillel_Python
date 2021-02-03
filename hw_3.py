@@ -34,7 +34,8 @@
 # "people" ⁠— Number of people in the household.
 # "tp" ⁠— Number of rolls.
 # Return a statement telling the user if they need to buy more TP!
-
+# import math
+#
 # def stock_tp(**kwargs):
 #     # print(kwargs)
 #     for i in kwargs:
@@ -47,7 +48,8 @@
 #     if stock >= 14:
 #         print('Congratulations, you will survive the quarantine and be clean!')
 #     else:
-#         print('Buddy, you need to buy more goods, otherwise you will be dirty :-(')
+#         you_need_buy = math.ceil((one_day_need * 14) / 500) - kwargs['tp']
+#         print(F'Buddy, you need to buy {you_need_buy} TP, otherwise you will be dirty :-(')
 #
 #
 # stock_tp(people = int(input('Enter the number of people who will live:')), tp = int(input('Enter the number of rolls of TP you have:')))
