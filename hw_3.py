@@ -10,6 +10,7 @@
 # def game():
 #     """Create a function for playing 'rock, scissors, paper'.
 #     A string should come to the function."""
+
 #     player = input('Enter one of the options: rock, scissors, paper.')
 #     enemy_program = random.choice(lis_options)
 #     if player == 'rock' and enemy_program == 'scissors':
@@ -37,7 +38,7 @@
 # import math
 #
 # def stock_tp(**kwargs):
-#     # print(kwargs)
+#     """The function considers whether you stay clean in quarantine. Accepts 2 int"""
 #     for i in kwargs:
 #         # print(i, kwargs[i])
 #         if i == 'people':
@@ -67,6 +68,9 @@
 # # "1lpp0"
 
 # def encrypt(original_word):
+#     """The function is to make a cipher. Replaces vowels with numbers from the dict
+#     and reverse a word"""
+#
 #     original_word = original_word[::-1]
 #     lis_original_word = list(original_word)
 #     lis_conformity = {
@@ -99,6 +103,8 @@
 # and "E" represents an empty spot.
 
 # def tic_tac_toe(lis):
+#     """Checks the game played.
+#     The code is terrible."""
 #     lis_winner = []
 #     count_winner = 0
 #     for i in lis:
