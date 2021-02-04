@@ -5,6 +5,7 @@
 # we got {}» остаток от деления.
 import functools
 
+
 # def decorator_remainder_of_division(func):
 #     @functools.wraps(func)
 #     def wraper(*args, **kwargs):
@@ -32,6 +33,25 @@ import functools
 # передается в вашу функцию.
 # Если это int, тогда выполнить функцию и вывести результат, если это str(),
 # тогда зарейзить ошибку ValueError (raise ValueError(“string type is not supported”))
+
+# def decorator_check_for_number(func):
+#     @functools.wraps(func)
+#     def wraper(*args, **kwargs):
+#         for i in args:
+#             if type(i) == int:
+#                 func(i)
+#             elif type(i) == str:
+#                 raise ValueError('string type is not supported')
+#
+#     return wraper
+#
+#
+# @decorator_check_for_number
+# def number_function(int_arg):
+#     print((int_arg * 100) / 20)
+
+
+number_function(2)
 
 # ЗАДАЧА-3
 # Написать декоратор который будет кешировать значения аргументов и результаты работы
