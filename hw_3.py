@@ -5,9 +5,9 @@
 
 # import random
 #
-# lis_options = ['rock', 'scissors', 'paper']
+# lis_options = ('rock', 'scissors', 'paper')
 #
-# def game():
+# def game_rock_scissors_paper():
 #     """Create a function for playing 'rock, scissors, paper'.
 #     A string should come to the function."""
 
@@ -22,7 +22,7 @@
 #     else:
 #         print('Buddy, try again!')
 #
-# game()
+# game_rock_scissors_paper()
 
 # 2)Try to imagine a world in which you might have to stay home for (Corona virus) 14 days
 # at any given time.
@@ -37,7 +37,7 @@
 # Return a statement telling the user if they need to buy more TP!
 # import math
 #
-# def stock_tp(**kwargs):
+# def stock_tp(*args, **kwargs):
 #     """The function considers whether you stay clean in quarantine. Accepts 2 int"""
 #     for i in kwargs:
 #         # print(i, kwargs[i])
@@ -102,6 +102,52 @@
 # for "X", "O", or a "Draw", where "X" and "O" represent themselves on the matrix,
 # and "E" represents an empty spot.
 
+def checking_who_won(lis_winner):
+    if lis_winner.count("X") == 3:
+        print("X")
+        lis_winner = []
+    elif lis_winner.count("O") == 3:
+        print("O")
+        lis_winner = []
+
+
+
+def tic_tac_toe(lis):
+    """Checks the game played.
+    The code is terrible."""
+    lis_winner = []
+    count_winner = 0
+    for i in lis:
+        if i.count("X") == 3:
+            print("X")
+            count_winner+=1
+        elif i.count("O") == 3:
+            print("O")
+            count_winner+=1
+
+    for j in range(3):
+        for i in range(3):
+            lis_winner.append(lis[i][j])
+            checking_who_won(lis_winner)
+        lis_winner = []
+
+    for i in range(3):
+        for j in range(3):
+            if i==j:
+                lis_winner.append(lis[i][j])
+                checking_who_won(lis_winner)
+    lis_winner = []
+
+    for i in range(3):
+        for j in range(3):
+            if i-2 == j or i == j or i == j-2:
+                lis_winner.append(lis[i][j])
+                checking_who_won(lis_winner)
+        lis_winner = []
+
+    if count_winner == 0:
+        print('Draw')
+
 # def tic_tac_toe(lis):
 #     """Checks the game played.
 #     The code is terrible."""
@@ -160,20 +206,23 @@
 #         print('Draw')
 
 # Example:
-# tic_tac_toe([
-#     ["X", "O", "X"],
-#     ["O", "X", "O"],
-#     ["O", "X", "X"]
-# ])  ➞ "X"
+tic_tac_toe([
+    ["X", "O", "X"],
+    ["O", "X", "O"],
+    ["O", "X", "X"]
+])
+# ➞ "X"
 #
 # tic_tac_toe([
 #     ["O", "O", "O"],
 #     ["O", "X", "X"],
 #     ["E", "X", "X"]
-# ]) ➞ "O"
+# ])
+# ➞ "O"
 #
 # tic_tac_toe([
 #     ["X", "X", "O"],
 #     ["O", "O", "X"],
 #     ["X", "X", "O"]
-# ]) ➞ "Draw"
+# ])
+# ➞ "Draw"
