@@ -24,9 +24,24 @@ import functools
 # @decorator_remainder_of_division
 # def multiplication(int_one, int_two):
 #     return int_one * int_two
+
+# def decorator_remainder_of_division(func):
+#     @functools.wraps(func)
+#     def wraper(*args, **kwargs):
+#         res = 100 % func(*args, **kwargs)
+#         if res == 0:
+#             print('We are OK!')
+#         else:
+#             print(f'Bad news guys,we got {res}')
+#     return wraper
 #
+# @decorator_remainder_of_division
+# def multiplication(int_one, int_two):
+#     """the function takes two numbers (int) and multiplies them."""
+#     return int_one * int_two
 #
 # multiplication(2, 3)
+
 
 # ЗАДАЧА-2
 # Написать декоратор который будет выполнять предпроверку типа аргумента который
@@ -36,11 +51,11 @@ import functools
 
 # def decorator_check_for_number(func):
 #     @functools.wraps(func)
-#     def wraper(*args, **kwargs):
+#     def wraper(*args):
 #         for i in args:
-#             if type(i) == int:
+#             if isinstance(i, int):
 #                 func(i)
-#             elif type(i) == str:
+#             elif isinstance(i, str):
 #                 raise ValueError('string type is not supported')
 #
 #     return wraper
@@ -48,6 +63,7 @@ import functools
 #
 # @decorator_check_for_number
 # def number_function(int_arg):
+#     """The function accepts a number for mathematical operation. Just for example."""
 #     print((int_arg * 100) / 20)
 #
 #
@@ -85,6 +101,8 @@ import functools
 #
 # @decorator_multi
 # def multi_bulti(int_n):
+#     """The name of the function speaks for itself.
+# Takes an argument as a number and raises it to the power of the accepted argument."""
 #     return int_n ** int_n
 #
 # print(multi_bulti(5))
@@ -93,69 +111,32 @@ import functools
 
 # def decorator_fib(func):
 #     cache = {}
-#     ncalls = 0
-#     ccalls = 0
+#
 #     @functools.wraps(func)
 #     def wrap(*args):
-#         nonlocal ccalls
-#         nonlocal ncalls
 #         if args in cache:
-#             ccalls += 1
-#             print(f'Used cache with counter = {ccalls}')
+#             wrap.ccalls += 1
+#             print(f'Used cache with counter = {wrap.ccalls}')
 #             return cache[args]
 #         else:
 #             cache[args] = func(*args)
-#             ncalls += 1
-#             print(f'Function executed with counter = {ncalls}, function result = {func(*args)}')
+#             wrap.ncalls += 1
+#             print(f'Function executed with counter = {wrap.ncalls}, function result = {func(*args)}')
 #             return cache[args]
 #
+#     wrap.ccalls = 0
+#     wrap.ncalls = 0
 #     return wrap
 #
 #
 # @decorator_fib
 # def fib(n):
+#     """Wacky example for finding the fibonacci number"""
 #     if n < 2:
 #         return n
 #     return fib(n-2) + fib(n-1)
 #
 # print('fib(20) =', fib(20))
-
-
-# def decorator_cash(func):
-#     cache = {}
-#     @functools.wraps(func)
-#     def wrapper(*args):
-#         if args in cache:
-#             wrapper.ccalls += 1
-#             return cache[args]
-#         else:
-#             wrapper.ncalls += 1
-#             cache[args] = func(*args)
-#             return cache[args]
-#
-#     wrapper.ccals = 0
-#     wrapper.ncals = 0
-#     return wrapper
-#
-# def decorator_print_res(func):
-#     @functools.wraps(func)
-#     def wrapper(*args):
-#         print(f'Used cache with counter = {func.ccalls}')
-#         print(f'Function executed with counter = {func.ncalls}, function result = {func(*args)}')
-#     return wrapper
-#
-# @decorator_cash
-# @decorator_print_res
-# def fib(n):
-#     if n < 2:
-#         return n
-#     return fib(n-2) + fib(n-1)
-#
-# print('fib(20) =', fib(20))
-
-
-
-
 
 
 
