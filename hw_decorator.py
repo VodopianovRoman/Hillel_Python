@@ -91,7 +91,7 @@ import functools
 #         else:
 #             wrap.ncalls += 1
 #             cache[args] = func(*args)
-#             print(f'Function executed with counter = {wrap.ncalls}, function result = {func(*args)}')
+#             print(f'Function executed with counter = {wrap.ncalls}, function result = {cache[args]}')
 #             return cache[args]
 #
 #     wrap.ccalls = 0
@@ -103,9 +103,10 @@ import functools
 # def multi_bulti(int_n):
 #     """The name of the function speaks for itself.
 # Takes an argument as a number and raises it to the power of the accepted argument."""
+#     print(f'this passed to func call {multi_bulti.ncalls}')
 #     return int_n ** int_n
 #
-# print(multi_bulti(5))
+# multi_bulti(5)
 
 
 
@@ -121,7 +122,7 @@ import functools
 #         else:
 #             cache[args] = func(*args)
 #             wrap.ncalls += 1
-#             print(f'Function executed with counter = {wrap.ncalls}, function result = {func(*args)}')
+#             print(f'Function executed with counter = {wrap.ncalls}, function result = {cache[args]}')
 #             return cache[args]
 #
 #     wrap.ccalls = 0
@@ -168,3 +169,32 @@ import functools
 #     return a
 #
 # my_func(10)
+
+# def use_cache(func):
+#     cache = {}
+#
+#     @functools.wraps(func)
+#     def wrapper(*args):
+#         if args in cache:
+#             wrapper.cache_calls += 1
+#             print(f"wrapper.cache_calls = {wrapper.cache_calls}")
+#             return cache[args]
+#         else:
+#             wrapper.function_calls += 1
+#             cache[args] = func(*args)
+#             print(f"wrapper.function_calls = {wrapper.function_calls}, function_result = {cache[args]}")
+#             return cache[args]
+#
+#     wrapper.function_calls = 0
+#     wrapper.cache_calls = 0
+#     return wrapper
+#
+# @use_cache
+# def any_func(a ,b):
+#     print(f'this passed to func call {any_func.function_calls}')
+#     return a * b
+
+# any_func(1,2)
+# any_func(1,2)
+# any_func(1,2)
+# any_func(2,2)
