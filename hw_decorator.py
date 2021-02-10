@@ -29,7 +29,7 @@ import functools
 #     @functools.wraps(func)
 #     def wraper(*args, **kwargs):
 #         res = 100 % func(*args, **kwargs)
-#         if res == 0:
+#         if not res:
 #             print('We are OK!')
 #         else:
 #             print(f'Bad news guys,we got {res}')
@@ -40,7 +40,7 @@ import functools
 #     """the function takes two numbers (int) and multiplies them."""
 #     return int_one * int_two
 #
-# multiplication(2, 3)
+# multiplication(2, 5)
 
 
 # ЗАДАЧА-2
