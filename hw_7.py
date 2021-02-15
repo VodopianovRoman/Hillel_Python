@@ -89,7 +89,7 @@ import pprint
     # with open(write_name_json, 'w') as write_json_file:
     #     json.dump(data_second, write_json_file, indent=2)
 
-    """If it is necessary to add"""
+    # """If it is necessary to add"""
     # with open(write_name_json, 'a') as write_json_file:
     #     json.dump(data_first, write_json_file, indent=2)
     #     json.dump(data_second, write_json_file, indent=2)
