@@ -57,6 +57,8 @@
 # краю путем равномерного добавления пробелов.
 
 # def far_right_text(original_file, modified_file, len_line):
+#         """Accepts two files and int value (how long the line should be).
+#         With the help of rjust it is right-aligned."""
 #     with open(original_file, 'r', encoding='utf-8') as file:
 #         for line in file:
 #             # print(len(line))
@@ -76,6 +78,8 @@
 # популярный отрезок времени в сутках длиной один час в целом для сайта.
 
 # def data_ip(original_file, sorted_file):
+#     """The function takes two files. Tricky with lists.
+#     I could not fully implement this task at the time of completing my homework."""
 #     ip_lis = []
 #     ip_inner_lis = []
 #     ip_count_dic = {}
