@@ -56,4 +56,57 @@
 # 3)Получить файл, в котором текст выровнен по правому
 # краю путем равномерного добавления пробелов.
 
-# def far_right_text()
+# def far_right_text(original_file, modified_file, len_line):
+#     with open(original_file, 'r', encoding='utf-8') as file:
+#         for line in file:
+#             # print(len(line))
+#             modified_line = line.rjust(len_line)
+#             with open(modified_file, 'a', encoding='utf-8') as mod_file:
+#                 mod_file.write(modified_line)
+#
+# far_right_text('hw_file_3.txt', 'hw_file_3.2.txt', 60)
+
+# 4)Дан текстовый файл со статистикой посещения сайта за неделю.
+#     Каждая строка содержит ip адрес, время и название дня недели
+# (например, 139.18.150.126 23:12:44 sunday). Создайте новый
+# текстовый файл, который бы содержал список ip без повторений
+# из первого файла. Для каждого ip укажите количество посещений,
+#                                                     наиболее
+# популярный день недели. Последней строкой в файле добавьте наиболее
+# популярный отрезок времени в сутках длиной один час в целом для сайта.
+
+# def data_ip(original_file, sorted_file):
+#     ip_lis = []
+#     ip_inner_lis = []
+#     ip_count_dic = {}
+#     day_dic = {}
+#     day_count_lis = []
+#     with open(original_file, 'r', encoding='utf-8') as file:
+#         for line in file:
+#             ip_lis.append(line)
+#         for elem in ip_lis:
+#             # print(elem)
+#             elem_lis = elem.split()
+#             ip_inner_lis.append(elem_lis)
+#
+#         for elem_ip in ip_inner_lis:
+#             # print(elem_lis[2])
+#             ip_count_dic[elem_ip[0]] = ip_count_dic.get(elem_ip[0], 0) + 1
+#
+#         for elem_day in ip_inner_lis:
+#             day_count_lis = elem_day[2]
+#             day_dic[elem_day[0]] = day_dic.get(elem_day[0], elem_day[2])
+#
+#         for elem_res in ip_count_dic:
+#             res_line = f'{elem_res} - {ip_count_dic[elem_res]}'
+#             # print(elem_res, ip_count_dic[elem_res])
+#             with open(sorted_file, 'a', encoding='utf-8') as file:
+#                 file.write(res_line)
+#                 file.write('\n')
+
+    # print(ip_lis)
+    # print(ip_inner_lis)
+    # print(ip_count_dic)
+    # print(day_dic)
+
+# data_ip('hw_file_4.txt', 'hw_file_4.2.txt')
