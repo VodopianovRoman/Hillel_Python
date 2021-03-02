@@ -149,3 +149,4 @@ product_banana = Product('Banana', 'fruit', 10, 10, 20)
 storage = Storage
 storage.add_to_store(product_banana)
 storage.one_balance(product_banana)
+ad
