@@ -98,16 +98,18 @@ class Data:
 # Добавить к этой задаче дескриптор для аттрибута цена.
 # При назначении цены товара будет автоматически добавлен НДС 20%
 # При получении цены товара, цена возврщается уже с учетом НДС
+import random
 
 class Product:
     storage = {}
 
-    def __init__(self, name, description, quantity, availability, price):
+    def __init__(self, name, description, quantity, availability, price, category):
         self.name = name
         self.description = description
         self.quantity = quantity
         self.availability = availability
         self.price = price
+        self.category = category
 
     # def add_product_to_storage(self):
     #     Product.storage[self.name] = self.quantity
@@ -129,10 +131,11 @@ class Storage:
 
     def add_to_store(self, product):
         self.store[product.name] = {}
-        self.store[product.name][product.description] = product.description
-        self.store[product.name][product.quantity] = product.quantity
-        self.store[product.name][product.availability] = product.availability
-        self.store[product.name][product.price] = product.price
+        self.store[product.name]['description'] = product.description
+        self.store[product.name]['quantity'] = product.quantity
+        self.store[product.name]['availability'] = product.availability
+        self.store[product.name]['price'] = product.price
+        self.store[product.name]['category'] = product.category
 
     def del_from_store(self, product):
         del self.store[product.name]
@@ -141,12 +144,67 @@ class Storage:
         if not product.name in self.store:
             print('This item is out of stock.')
         else:
-            print(f'Balance of {product.name} on storage: {self.store[product.name][product.quantity]}')
+            print(f'Balance of {product.name} on storage: {self.store[product.name]["quantity"]}')
+
+    def all_balance(self):
+        all_prod = {}
+        # d = {self.store: self.store[product.name]['quantity'] for product in self.store}
+        # print(d)
+        for prod in self.store:
+            # print(prod)
+            for qa in self.store[prod]:
+                # print(qa)
+                if qa == 'quantity':
+                    all_prod[prod] = self.store[prod][qa]
+                    # print(f'The rest of all goods:{prod} - {self.store[prod][qa]}')
+        # print(self.store)
+        print(f'The rest of all goods: {all_prod}')
+
+    def get_prod_category(self, category):
+        category_list = []
+        for prod in self.store:
+            for cate in self.store[prod]:
+                if cate == 'category' and self.store[prod][cate] == category:
+                    category_list.append(prod)
+        print(f'List products by category "{category}": {category_list}')
 
 
-product_banana = Product('Banana', 'fruit', 10, 10, 20)
+class ShoppingBasket:
 
-storage = Storage
-storage.add_to_store(product_banana)
-storage.one_balance(product_banana)
-ad
+    def __init__(self):
+        self.basket = {}
+
+    def add_to_basket(self, **kwargs):
+        self.order_id = 1
+        # if need <= product.availability:
+        #     self.basket[self.order_id] = {}
+        #     self.basket[self.order_id]['name'] = product.name
+        #     self.basket[self.order_id]['need'] = need
+        #     self.basket[self.order_id]['total_price'] = product.price * need
+        #     print(f'Your order number: {self.order_id}')
+        #     self.order_id += 1
+        # else:
+        #     print('The required quantity of goods is not in stock.')
+        # self.order_id += 1
+
+    def get_order(self, order_id):
+        if order_id == self.order_id:
+            print('There is no such order.')
+        else:
+            print(self.basket[order_id])
+
+product_banana = Product('Banana', 'Yummy', 10, 10, 20, 'fruit')
+# product_apple = Product('Apple', 'Yummy', 20, 20, 5, 'fruit')
+# product_potato = Product('Potato', 'Best food', 35, 35, 15, 'vegetable')
+
+storage = Storage()
+# storage.add_to_store(product_banana)
+# storage.add_to_store(product_apple)
+# storage.add_to_store(product_potato)
+# storage.one_balance(product_banana)
+# storage.all_balance()
+# storage.get_prod_category('fruit')
+
+shopping_basket = ShoppingBasket()
+shopping_basket.add_to_basket(product_banana, 2)
+shopping_basket.get_order(1)
