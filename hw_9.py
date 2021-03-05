@@ -1,9 +1,15 @@
+import datetime
+
+
 # Задача-1
 # Реализовать дескриптор валидации для аттрибута email.
 # Ваш дескриптор должен проверять формат email который вы пытаетесь назначить
 
 
 class EmailDescriptor:
+    """A simple example of a descriptor.
+    The check is extremely imperfect, but the very principle of operation of the descriptor is shown."""
+
     def __get__(self, instance, owner):
         # your code here
         return instance._email
@@ -37,6 +43,9 @@ my_class = MyClass()
 # Реализовать синглтон метакласс(класс для создания классов синглтонов).
 
 class Singleton(type):
+    """I read the article and took an example from here:
+     https://webdevblog.ru/realizaciya-shablona-singleton-v-python/"""
+
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
@@ -60,19 +69,26 @@ class MyClass(metaclass=Singleton):
 # состояния для каждого класса где он объявлен
 
 class IngegerField:
-    pass
+    """This solution has already been implemented in the lecture:
+    https://docs.google.com/presentation/d/1BKTXac09H5QJB7ihOMSkrpQS8gS906EoBy7pQRNOzJU/edit#slide=id.p20"""
+
+    def __init__(self, label):
+        self.label = label
+
+    def __get__(self, instance, owner):
+        return instance.__dict__[self.label]
 
 
 class Data:
-    number = IngegerField()
+    number = IngegerField('first')
 
 
-# data_row = Data()
-# new_data_row = Data()
-#
-# data_row.number = 5
-# new_data_row.number = 10
-#
+data_row = Data()
+new_data_row = Data()
+
+data_row.number = 5
+new_data_row.number = 10
+
 # assert data_row.number != new_data_row.number
 
 
@@ -98,10 +114,22 @@ class Data:
 # Добавить к этой задаче дескриптор для аттрибута цена.
 # При назначении цены товара будет автоматически добавлен НДС 20%
 # При получении цены товара, цена возврщается уже с учетом НДС
-import random
+
+
+class Price:
+
+    def __get__(self, instance, owner):
+        return instance._price * 1.2
+
+    def __set__(self, instance, value):
+        instance._price = value
+
 
 class Product:
+    """class product, takes values for initialization."""
+
     storage = {}
+    price = Price()
 
     def __init__(self, name, description, quantity, availability, price, category):
         self.name = name
@@ -111,20 +139,18 @@ class Product:
         self.price = price
         self.category = category
 
-    # def add_product_to_storage(self):
-    #     Product.storage[self.name] = self.quantity
-    #
-    # def del_product_from_storage(self):
-    #     del Product.storage[self.name]
-    #
-    # def balance_product_from_storage(self):
-    #     if not self.name in Product.storage:
-    #         print('This item is out of stock.')
-    #     else:
-    #         print(f'Balance of {self.name} on storage: {Product.storage[self.name]}')
+
+
+    def product_info(self):   #used to display product properties
+        print(f'Product name: {self.name}; Product description: {self.description}; Product quantity: {self.quantity};'
+              f'Product availability: {self.availability}; Product price: {self.price}; Product category: {self.category}')
 
 
 class Storage:
+    """Storage class. Takes a product and creates a dictionary with the required key: value.
+Methods:add_to_store - adding to storage
+;del_from_store - deletion from storage;one_balance - balance of 1 product;
+all_balance - balance of all products;get_prod_category - balance of all products by category"""
 
     def __init__(self):
         self.store = {}
@@ -136,6 +162,7 @@ class Storage:
         self.store[product.name]['availability'] = product.availability
         self.store[product.name]['price'] = product.price
         self.store[product.name]['category'] = product.category
+        return self.store
 
     def del_from_store(self, product):
         del self.store[product.name]
@@ -144,20 +171,14 @@ class Storage:
         if not product.name in self.store:
             print('This item is out of stock.')
         else:
-            print(f'Balance of {product.name} on storage: {self.store[product.name]["quantity"]}')
+            print(f'Balance of {product.name} on storage: {self.store[product.name]["availability"]}')
 
     def all_balance(self):
         all_prod = {}
-        # d = {self.store: self.store[product.name]['quantity'] for product in self.store}
-        # print(d)
         for prod in self.store:
-            # print(prod)
             for qa in self.store[prod]:
-                # print(qa)
                 if qa == 'quantity':
                     all_prod[prod] = self.store[prod][qa]
-                    # print(f'The rest of all goods:{prod} - {self.store[prod][qa]}')
-        # print(self.store)
         print(f'The rest of all goods: {all_prod}')
 
     def get_prod_category(self, category):
@@ -170,41 +191,52 @@ class Storage:
 
 
 class ShoppingBasket:
+    """class Basket. Pirnitsya product, storage and quantity of product required.
+    is a nested dictionary, where the first key is the order number, whose value is a dictionary
+    After adding, the quantity of available product changes in the storage.
+    Method:add_to_basket - adds order;; get_track_your_order - detailed information on the order.
+    """
 
     def __init__(self):
         self.basket = {}
 
-    def add_to_basket(self, **kwargs):
+    def add_to_basket(self, product, need, storage):
         self.order_id = 1
-        # if need <= product.availability:
-        #     self.basket[self.order_id] = {}
-        #     self.basket[self.order_id]['name'] = product.name
-        #     self.basket[self.order_id]['need'] = need
-        #     self.basket[self.order_id]['total_price'] = product.price * need
-        #     print(f'Your order number: {self.order_id}')
-        #     self.order_id += 1
-        # else:
-        #     print('The required quantity of goods is not in stock.')
-        # self.order_id += 1
+        if need <= product.availability:
+            self.basket[self.order_id] = {}
+            self.basket[self.order_id]['name'] = product.name
+            self.basket[self.order_id]['need'] = need
+            self.basket[self.order_id]['total_price_with_NDS'] = product.price * need
+            print(f'Your order number: {self.order_id}')
+            self.order_id += 1
+            self.date_purchased = datetime.datetime.now()
+            self.change_count = storage.store[product.name]['availability'] - need
+            storage.store[product.name]['availability'] = self.change_count
+        else:
+            print('The required quantity of goods is not in stock.')
 
-    def get_order(self, order_id):
+    def get_track_your_order(self, order_id):
         if order_id == self.order_id:
             print('There is no such order.')
         else:
-            print(self.basket[order_id])
+            self.date_purchased = self.date_purchased.strftime("%d-%m-%Y %H:%M")
+            print(f'Order number - #{order_id}. Order date: {self.date_purchased}. Detailed ordering information: {self.basket[order_id]}')
 
 product_banana = Product('Banana', 'Yummy', 10, 10, 20, 'fruit')
+# product_banana.product_info()
 # product_apple = Product('Apple', 'Yummy', 20, 20, 5, 'fruit')
 # product_potato = Product('Potato', 'Best food', 35, 35, 15, 'vegetable')
 
 storage = Storage()
-# storage.add_to_store(product_banana)
+storage.add_to_store(product_banana)
 # storage.add_to_store(product_apple)
 # storage.add_to_store(product_potato)
-# storage.one_balance(product_banana)
+storage.one_balance(product_banana)
 # storage.all_balance()
 # storage.get_prod_category('fruit')
-
+#
 shopping_basket = ShoppingBasket()
-shopping_basket.add_to_basket(product_banana, 2)
-shopping_basket.get_order(1)
+shopping_basket.add_to_basket(product_banana, 2, storage)
+shopping_basket.get_track_your_order(1)
+storage.one_balance(product_banana)
+# storage.one_balance(product_banana)
