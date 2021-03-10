@@ -1,4 +1,6 @@
 import datetime
+from email_validator import validate_email, EmailNotValidError
+import re
 
 
 # Задача-1
@@ -11,19 +13,23 @@ class EmailDescriptor:
     The check is extremely imperfect, but the very principle of operation of the descriptor is shown."""
 
     def __get__(self, instance, owner):
-        # your code here
         return instance._email
 
     def __set__(self, instance, value):
-        # your code here
-        index = value.find('@')
-        if index != -1:
-            if value.endswith('gmail.com', index):
-                instance._email = value
-            else:
-                raise ValueError
-        else:
-            raise ValueError
+        try:
+            valid = validate_email(value)
+            instance._email = valid.email
+            print(f'Email: {value} - is valid')
+        except EmailNotValidError as e:
+            print(str(e))
+        # index = value.find('@')
+        # if index != -1:
+        #     if value.endswith('gmail.com', index):
+        #         instance._email = value
+        #     else:
+        #         raise ValueError
+        # else:
+        #     raise ValueError
 
 
 class MyClass:
@@ -51,7 +57,7 @@ class Singleton(type):
     def __call__(cls, *args, **kwargs):
         # your code here
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+            cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 
 
@@ -131,19 +137,22 @@ class Product:
     storage = {}
     price = Price()
 
-    def __init__(self, name, description, quantity, availability, price, category):
+    def __init__(self, name, description, quantity, availability, _price, category):
         self.name = name
         self.description = description
         self.quantity = quantity
         self.availability = availability
-        self.price = price
+        self.price = _price
         self.category = category
 
 
 
-    def product_info(self):   #used to display product properties
-        print(f'Product name: {self.name}; Product description: {self.description}; Product quantity: {self.quantity};'
-              f'Product availability: {self.availability}; Product price: {self.price}; Product category: {self.category}')
+    # def product_info(self):   #used to display product properties
+    #     print(f'Product name: {self.name}; Product description: {self.description}; Product quantity: {self.quantity};'
+    #           f'Product availability: {self.availability}; Product price: {self.price}; Product category: {self.category}')
+
+    def __str__(self):
+        return f'Product name: {self.name}; Product description: {self.description}; Product quantity: {self.quantity}; Product availability: {self.availability}; Product price: {self.price}; Product category: {self.category}'
 
 
 class Storage:
@@ -191,16 +200,14 @@ all_balance - balance of all products;get_prod_category - balance of all product
 
 
 class ShoppingBasket:
-    """class Basket. Pirnitsya product, storage and quantity of product required.
+    """class Basket. Accepts product, storage and quantity of product required.
     is a nested dictionary, where the first key is the order number, whose value is a dictionary
     After adding, the quantity of available product changes in the storage.
     Method:add_to_basket - adds order;; get_track_your_order - detailed information on the order.
     """
 
-    def __init__(self):
+    def __init__(self, product, need, storage):
         self.basket = {}
-
-    def add_to_basket(self, product, need, storage):
         self.order_id = 1
         if need <= product.availability:
             self.basket[self.order_id] = {}
@@ -210,8 +217,27 @@ class ShoppingBasket:
             print(f'Your order number: {self.order_id}')
             self.order_id += 1
             self.date_purchased = datetime.datetime.now()
+            # self.date_purchased = self.date_purchased.strftime("%d-%m-%Y %H:%M")
             self.change_count = storage.store[product.name]['availability'] - need
             storage.store[product.name]['availability'] = self.change_count
+        else:
+            print('The required quantity of goods is not in stock.')
+
+    def add_to_basket(self, order_id, product, need, storage):
+        if need <= product.availability:
+            if self.basket[order_id]['name'] == product.name:
+                self.basket[order_id]['need'] += need
+                self.basket[order_id]['total_price_with_NDS'] = self.basket[order_id]['need'] * product.price
+            else:
+                self.basket[self.order_id] = {}
+                self.basket[self.order_id]['name'] = product.name
+                self.basket[self.order_id]['need'] = need
+                self.basket[self.order_id]['total_price_with_NDS'] = product.price * need
+                print(f'Your order number: {self.order_id}')
+                self.order_id += 1
+                self.date_purchased = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
+                self.change_count = storage.store[product.name]['availability'] - need
+                storage.store[product.name]['availability'] = self.change_count
         else:
             print('The required quantity of goods is not in stock.')
 
@@ -219,24 +245,25 @@ class ShoppingBasket:
         if order_id == self.order_id:
             print('There is no such order.')
         else:
-            self.date_purchased = self.date_purchased.strftime("%d-%m-%Y %H:%M")
             print(f'Order number - #{order_id}. Order date: {self.date_purchased}. Detailed ordering information: {self.basket[order_id]}')
 
-product_banana = Product('Banana', 'Yummy', 10, 10, 20, 'fruit')
+# product_banana = Product('Banana', 'Yummy', 10, 10, 20, 'fruit')
+# print(product_banana)
 # product_banana.product_info()
 # product_apple = Product('Apple', 'Yummy', 20, 20, 5, 'fruit')
 # product_potato = Product('Potato', 'Best food', 35, 35, 15, 'vegetable')
 
-storage = Storage()
-storage.add_to_store(product_banana)
-# storage.add_to_store(product_apple)
-# storage.add_to_store(product_potato)
-storage.one_balance(product_banana)
-# storage.all_balance()
-# storage.get_prod_category('fruit')
+# storage1 = Storage()
+# storage1.add_to_store(product_banana)
+# storage1.add_to_store(product_apple)
+# storage1.add_to_store(product_potato)
+# storage1.one_balance(product_banana)
+# storage1.all_balance()
+# storage1.get_prod_category('fruit')
 #
-shopping_basket = ShoppingBasket()
-shopping_basket.add_to_basket(product_banana, 2, storage)
-shopping_basket.get_track_your_order(1)
-storage.one_balance(product_banana)
-# storage.one_balance(product_banana)
+# shopping_basket = ShoppingBasket(product_banana, 2, storage1)
+# shopping_basket.add_to_basket(1, product_apple, 2, storage1)
+# shopping_basket.get_track_your_order(1)
+# shopping_basket.get_track_your_order(2)
+# storage1.one_balance(product_banana)
+# storage1.one_balance(product_apple)
